@@ -1,6 +1,6 @@
 Webtunes::Application.routes.draw do
   get "webtunes/interface"
-
+  match "/play_pause" => "webtunes#play_pause", :via => :post
   post "webtunes/next_song"
 
   # The priority is based upon order of creation:
@@ -52,7 +52,7 @@ Webtunes::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "webtunes#interface"
+  root :to => "webtunes#test"
 
   # See how all your routes lay out with "rake routes"
 
