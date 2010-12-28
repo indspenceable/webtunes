@@ -8,8 +8,19 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-
+	<div id="header">
+		<div id="headerContent">
+			Web Tunes
+		</div>
+	</div>
+	
+	<div id="container">
+		<div id="cTop"></div>
+		<div id="cMiddle">
+	
 <%= yield %>
-
+		</div>
+		<div id="cBottom"></div>
+	</div>
 </body>
 </html>
