@@ -68,8 +68,41 @@ a img{
  */
 
 #leftSection{
+	position: relative;
 	width:250px;
 	border-right: 1px solid #202020;
-}
-/*==== Controls ====*/
 
+}
+
+/*==== Controls ====*/
+#controls{
+	margin: 0px 0px 0px 10px;
+	overflow:auto;
+}
+
+#play_pause{
+	float:left;
+	width: 46px;
+	height: 47px;
+	background: url('/images/play.png') 0 0 no-repeat;
+}
+#play_pause:hover{
+	background-position: 0px -47px;
+}
+#play_pause:active{
+	background-position: 0px -94px;
+}
+
+#next{
+	float:left;
+	margin: 7px 0px 5px 10px;
+	width: 34px;
+	height: 34px;
+	background: url('/images/next.png') 0 0 no-repeat;
+}
+#next:hover{
+	background-position: 0px -34px;
+}
+#next:active{
+	background-position: 0px -68px;
+}
