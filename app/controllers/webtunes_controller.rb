@@ -5,19 +5,23 @@ class WebtunesController < ApplicationController
   def test
   end
 
+
+
+  ## Controls for manipulating itunes
   #toggle playing status
   def play_pause
-    puts "hello, world."
-    #AppleScript.execute('tell application "iTunes"
-    #                      play
-    #                    end tell')
     itunes 'playpause'
   end
 
   #skip the current_song
   def next
-    itunes 'next_track'
+    itunes 'next track'
   end
+
+  def back
+    itunes 'previous track'
+  end
+
 
   private
   def itunes action

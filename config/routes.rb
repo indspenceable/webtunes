@@ -1,6 +1,8 @@
 Webtunes::Application.routes.draw do
   get "webtunes/interface"
   match "/play_pause" => "webtunes#play_pause", :via => :post
+  match "/next" => "webtunes#next", :via => :post
+  match "/back" => "webtunes#back", :via => :post
   post "webtunes/next_song"
 
   # The priority is based upon order of creation:
