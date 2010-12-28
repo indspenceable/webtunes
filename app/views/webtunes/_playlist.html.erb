@@ -1,0 +1,25 @@
+<div id="playlist">
+	<ul id="songs">
+		<div class="dragPadding"></div>
+		<li class="currentSong">
+			<span class="songTitle">We Are The World</span><br>
+			<span class="artist">Kanye West</span>
+		</li>
+		<li class="nextSong">
+			<span class="songTitle">We Are The World</span><br>
+			<span class="artist">Kanye West</span>
+		</li>
+		<div class="dragPadding"></div>
+	</ul>
+</div>
+
+<script>
+	$(function(){
+		$("#songs").sortable({
+			revert:true,
+			containment: "#playlist",
+			stop: function(event, ui) { console.log("over")}
+		});
+
+	});
+</script>

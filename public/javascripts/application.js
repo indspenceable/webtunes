@@ -1,4 +1,4 @@
-var is_paused = true;
+var is_paused = true;  //Need to set this from iTunes current state
 $(document).ready(function() {
     $('#play_pause').click(function() {
       $.post('play_pause');

@@ -60,6 +60,7 @@ a img{
 #cMiddle{
 	background: #FFFFFF;
 	width: 1040px;
+	overflow: auto;
 }
 
 
@@ -113,3 +114,51 @@ a img{
 	width: 120px;
 	padding: 10px;
 }
+
+/*==== Playlist ====*/
+#playlist{
+	font-size: 14px;
+	line-height: 19px;
+	margin: 0px 0px 20px 0px;
+/*	padding: 100px 0 10px 0;*/
+}
+.songTitle{
+	font-weight:bold;
+}
+.artist{
+	font-weight: normal;
+}
+#playlist li{
+	list-style-type: none;
+}
+
+.currentSong{
+	color:#680808;
+	width: 216px;
+	height: 39px;
+	padding: 7px;
+	background: url('/images/currentSong.png') 0 0 no-repeat;
+	margin: 0px 0px 2px 10px;
+}
+.nextSong{
+	width: 216px;
+	height: 39px;
+	padding: 7px;
+	background: url('/images/nextSong.png') 0 0 no-repeat;
+	margin: 0px 0px 2px 10px;
+}
+.nextSong:hover{
+	background-position: 0px -53px;
+	cursor: move;
+}
+
+.dragPadding{
+	height: 20px;
+	width: 100%;
+}
+
+
+
+
+
+
