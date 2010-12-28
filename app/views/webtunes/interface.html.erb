@@ -19,8 +19,7 @@ $(function() {
 });
 
 $( "#vSlider" ).bind( "slidestop", function(event, ui) {
-	alert($( "#vSlider" ).slider( "values", 0 ).toString());
-	// Change volume on iTunes here
+	$.post('set_volume', {level:$( "#vSlider" ).slider( "values", 0 )});
 });
 
 </script>
