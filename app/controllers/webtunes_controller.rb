@@ -5,23 +5,23 @@ class WebtunesController < ApplicationController
   def test
   end
 
-
-
   ## Controls for manipulating itunes
   #toggle playing status
   def play_pause
     itunes 'playpause'
   end
-
   #skip the current_song
   def next
     itunes 'next track'
   end
-
+  # back to the previous track
   def back
-    itunes 'previous track'
+    itunes 'back track'
   end
-
+  def set_volume
+    itunes "set sound volume to #{params[:level]}"
+    render :json => get_itunes_status
+  end
 
   private
   def itunes action
@@ -29,6 +29,10 @@ class WebtunesController < ApplicationController
     AppleScript.execute("tell application \"iTunes\" 
                           #{action} 
                         end tell")
+  end
+
+  def get_itunes_status
+    'get sound volume'
   end
 
 end

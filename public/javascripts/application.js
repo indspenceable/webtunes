@@ -8,4 +8,7 @@ $(document).ready(function() {
     $('#prev').click(function() {
       $.post('back')
       });
+    $('#vol').click(function() {
+      $.post('set_volume',{level: 40})
+      });
     })
