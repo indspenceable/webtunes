@@ -106,3 +106,10 @@ a img{
 #next:active{
 	background-position: 0px -68px;
 }
+
+#volume{
+	float:left;
+	margin: 7px 0 0 0;
+	width: 120px;
+	padding: 10px;
+}
