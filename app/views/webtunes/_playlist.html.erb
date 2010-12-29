@@ -1,11 +1,26 @@
 <div id="playlist">
 	<ul id="songs">
 		<div class="dragPadding"></div>
-		<li class="currentSong">
+		<li class="song currentSong">
+			<span class="songTitle">We Are The World</span><br>
+			<span class="artist">Kanye West</span>
+			<div class="xButton"></div>
+			<script>
+				$('.xButton').click(function(){
+					$(this).parent().remove();
+					alert("Removed one")
+				});
+			</script>
+		</li>
+		<li class="song nextSong">
+			<span class="songTitle">We Are The World</span><br>
+			<span class="artist">Kanye West</span>			
+		</li>
+		<li class="song nextSong">
 			<span class="songTitle">We Are The World</span><br>
 			<span class="artist">Kanye West</span>
 		</li>
-		<li class="nextSong">
+		<li class="song nextSong">
 			<span class="songTitle">We Are The World</span><br>
 			<span class="artist">Kanye West</span>
 		</li>
@@ -18,7 +33,7 @@
 		$("#songs").sortable({
 			revert:true,
 			containment: "#playlist",
-			stop: function(event, ui) { console.log("over")}
+			stop: function(event, ui) { alert("Reordered one")}
 		});
 
 	});

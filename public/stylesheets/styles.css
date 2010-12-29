@@ -32,20 +32,24 @@ a img{
 
 #header{
 	width: 100%;
-	height: 100px;
+	height: 110px;
 	margin: 0px auto 0px auto;
 	background: #7f2108;
 }
 #headerContent{
-	width: 1040px;
+	font-family: "Gotham-Light", "Gill Sans", verdana;
+	font-size: 27px;
+	color: #FFFFFF;
+	width: 1035px;
 	margin: 0px auto 0px auto;
+	padding: 7px 0 0 5px;
 	height: 40px;
 }
 
 #container{
 /*	position: relative;*/
 	width: 1040px;
-	margin: -60px auto 0px auto;
+	margin: -65px auto 0px auto;
 }
 #cTop{
 	width: 1040px;
@@ -77,7 +81,7 @@ a img{
 
 /*==== Controls ====*/
 #controls{
-	margin: 0px 0px 0px 10px;
+	margin: 7px 0px 0px 12px;
 	overflow:auto;
 }
 
@@ -85,13 +89,18 @@ a img{
 	float:left;
 	width: 46px;
 	height: 47px;
-	background: url('/images/play.png') 0 0 no-repeat;
 }
 #play_pause:hover{
 	background-position: 0px -47px;
 }
 #play_pause:active{
 	background-position: 0px -94px;
+}
+.play{
+	background: url('/images/play.png') 0 0 no-repeat;
+}
+.pause{
+	background: url('/images/pause.png') 0 0 no-repeat;
 }
 
 #next{
@@ -117,7 +126,7 @@ a img{
 
 /*==== Playlist ====*/
 #playlist{
-	font-size: 14px;
+	font-size: 13px;
 	line-height: 19px;
 	margin: 0px 0px 20px 0px;
 /*	padding: 100px 0 10px 0;*/
@@ -132,24 +141,42 @@ a img{
 	list-style-type: none;
 }
 
-.currentSong{
-	color:#680808;
-	width: 216px;
+.song{
+	width: 213px;
 	height: 39px;
-	padding: 7px;
-	background: url('/images/currentSong.png') 0 0 no-repeat;
+	padding: 7px 7px 7px 10px;
 	margin: 0px 0px 2px 10px;
 }
+.currentSong{
+	color:#680808;
+	background: url('/images/currentSong.png') 0 0 no-repeat;
+}
 .nextSong{
-	width: 216px;
-	height: 39px;
-	padding: 7px;
 	background: url('/images/nextSong.png') 0 0 no-repeat;
-	margin: 0px 0px 2px 10px;
+}
+.currentSong:hover{
+	cursor: move;
 }
 .nextSong:hover{
 	background-position: 0px -53px;
 	cursor: move;
+}
+
+.xButton{
+	position: relative;
+	float:right;
+	top: -20px;
+	width: 15px;
+	height: 15px;
+	background: url('/images/xButtons.png') 0 0 no-repeat;
+	visibility: hidden;
+	cursor: pointer;
+}
+.xButton:hover{
+	background-position: 0px -15px;
+}
+.song:hover .xButton{
+	visibility: visible;
 }
 
 .dragPadding{
