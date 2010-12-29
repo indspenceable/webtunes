@@ -73,7 +73,8 @@ a img{
  */
 
 #leftSection{
-	position: relative;
+/*	position: relative;*/
+	float: left;
 	width:250px;
 	border-right: 1px solid #202020;
 
@@ -183,6 +184,42 @@ a img{
 	height: 20px;
 	width: 100%;
 }
+
+
+
+/*
+ * Right Side
+ */
+
+#rightSection{
+	float: right;
+	width: 780px;
+}
+/*==== Top Section ====*/
+#top{
+	width: 760px;
+	float: right;
+	margin: 10px 0px 0px 20px;
+}
+
+#searchBox{
+	width: 567px;
+	height: 56px;
+	background: url('/images/searchInput.png');
+}
+
+#searchBox input[type="text"]{
+	height: 32px;
+	width: 543px;
+	margin: 7px;
+	border: none;
+	font-size: 22px;
+	padding: 10px 0 0 7px;
+	outline: 0 none;
+	background: none;
+}
+
+
 
 
 

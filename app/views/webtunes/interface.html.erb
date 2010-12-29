@@ -10,6 +10,14 @@
 	<%= render 'playlist' %>
 </div>
 
+<div id="rightSection">
+	<div id="top">
+		<div id="searchBox">
+			<input type="text" value="Find some music bro" id="searchField"></input>
+		</div>
+	</div>
+</div>
+
 <script>
 
 $(function() {
@@ -24,4 +32,12 @@ $( "#vSlider" ).bind( "slidestop", function(event, ui) {
 	$.post('set_volume', {level:$( "#vSlider" ).slider( "values", 0 )});
 });
 
+$("#searchField").focus(function(){
+	if ($('#searchField').val() == "Find some music bro"){
+		$('#searchField').val("");	
+	} 
+});
+$("#searchField").click(function(){
+	this.select();
+});
 </script>
