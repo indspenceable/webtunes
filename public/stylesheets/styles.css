@@ -76,8 +76,9 @@ a img{
 /*	position: relative;*/
 	float: left;
 	width:250px;
+	height: 100%;
 	border-right: 1px solid #202020;
-
+	overflow:auto;
 }
 
 /*==== Controls ====*/
@@ -194,17 +195,19 @@ a img{
 #rightSection{
 	float: right;
 	width: 780px;
+	overflow: auto;
 }
 /*==== Top Section ====*/
 #top{
 	width: 760px;
 	float: right;
-	margin: 10px 0px 0px 20px;
+	margin: 10px 0px 0px 0px;
 }
 
 #searchBox{
 	width: 567px;
 	height: 56px;
+	margin: 0px 0px 0px 39px;
 	background: url('/images/searchInput.png');
 }
 
@@ -220,7 +223,72 @@ a img{
 }
 
 
+/*==== Songs ====*/
 
+#songs{
+	float: right;
+	width: 770px;
+	margin: 20px 10px 20px 0px;
+}
+
+#songs ul li{
+	list-style-type: none;
+	width: 767px;
+	height: 34px;
+	cursor: pointer;
+}
+#songs ul li .details{
+	float: left;
+	width: 707px;
+	height: 34px;
+	background: url('/images/row_even.png') 0 0 no-repeat;
+}
+
+#songs ul li  ul{
+	padding: 5px 0px 0px 5px;
+}
+#songs ul li ul li{
+	float: left;
+	list-style-type: none;
+	width: 220px;
+	padding: 5px;
+	margin: 0px 0px 5px 0px;
+	height: 13px;
+	background: 0 none;
+	font-size: 13px;
+}
+
+#songs ul li:nth-of-type(odd) .details{
+  background: url('/images/row_odd.png') 0 0 no-repeat;
+}
+
+#songs ul li:hover .songButton{
+	visibility: visible;
+}
+#songs ul li:hover .details{
+	background-position: 0px -34px;
+}
+
+.songButton{
+	float: left;
+	position: relative;
+	visibility: hidden;
+	width: 30px;
+	height: 34px;
+	right: -1px;
+}
+.songButton:hover{
+	background-position: 0 -34px;
+}
+.songButton:active{
+	background-position: 0 -68px;
+}
+.add{
+	background: url('/images/row_add.png');}
+
+.playNow{
+	background: url('/images/row_play.png');
+}
 
 
 

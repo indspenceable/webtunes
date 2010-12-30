@@ -1,5 +1,5 @@
 <div id="playlist">
-	<ul id="songs">
+	<ul id="playlist_songs">
 		<div class="dragPadding"></div>
 		<li class="song currentSong">
 			<span class="songTitle">We Are The World</span><br>
@@ -8,7 +8,7 @@
 			<script>
 				$('.xButton').click(function(){
 					$(this).parent().remove();
-					alert("Removed one")
+					alert("Removed one - For some reason this gets called twice if you remove after re-ordering")
 				});
 			</script>
 		</li>
@@ -30,7 +30,7 @@
 
 <script>
 	$(function(){
-		$("#songs").sortable({
+		$("#playlist_songs").sortable({
 			revert:true,
 			containment: "#playlist",
 			stop: function(event, ui) { alert("Reordered one")}
