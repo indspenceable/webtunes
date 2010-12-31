@@ -8,6 +8,9 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
+	<% if @needs_login%>
+		<%= render 'welcome' %>
+	<% end %>
 	<div id="header">
 		<div id="headerContent">
 			webTunes
