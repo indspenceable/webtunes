@@ -349,6 +349,8 @@ a img{
 	margin: 0 0 0 10px;
 	width: 147px;
 	height: 56px;
+	text-indent: -9000px;
+	border: none;
 	background: url('/images/enter.png') 0 0 no-repeat;
 }
 

@@ -4,23 +4,27 @@
 			Welcome to webTunes
 		</div>
 		
+		
+	<%= form_tag('webtunes/login', :remote => true) do %>
 		<div id="welcomeTextEntry">
+			<%= text_field_tag(:id, 'Who are you?')%>
+		</div>
+		<%= submit_tag("Let me in", :class => 'letMeIn')%>
+	<% end %>
+		<!-- <div id="welcomeTextEntry">
 			<input type="text" value="Who are you?" id="WTE"></input>
 		</div>
 		
-		<div class="letMeIn"></div>
+		<div class="letMeIn"></div> -->
 	</div>
 </div>
 
 <script>
-	$("#WTE").focus(function(){
-		if ($('#WTE').val() == "Who are you?"){
-			$('#WTE').val("");
+	$("#id").focus(function(){
+		if ($('#id').val() == "Who are you?"){
+			$('#id').val("");
 			$('.letMeIn').addClass('LMIafterFocus');
-			$('.letMeIn').click(function(){
-				$.post('login/' + $('#WTE').val());
-				$('#welcomeMask').remove();
-			});
+
 		} 
 	});
 </script>
