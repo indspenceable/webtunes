@@ -21,6 +21,12 @@
 				$.post('login/' + $('#WTE').val());
 				$('#welcomeMask').remove();
 			});
+			$('#WTE').keypress(function(){
+				if (event.keyCode == 13){
+					$.post('login/' + $('#WTE').val());
+					$('#welcomeMask').remove();
+				}
+			});
 		} 
 	});
 </script>

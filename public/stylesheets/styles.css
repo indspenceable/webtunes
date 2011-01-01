@@ -15,10 +15,10 @@ body{
 
 a:link{
 	text-decoration:none;
-	color:#0d4496;
+	color:#580e0e;
 }
 a:visited{
-	color:#0d4496;
+	color:#580e0e;
 	text-decoration:none;
 }
 a:hover{
@@ -139,14 +139,21 @@ a img{
 .artist{
 	font-weight: normal;
 }
+.user {
+	position: relative;
+	top: 19px;
+	right: -15px;
+	float: right;
+	font-size: 11px;
+}
 #playlist li{
 	list-style-type: none;
 }
 
 .song{
 	width: 213px;
-	height: 39px;
-	padding: 7px 7px 7px 10px;
+	height: 46px;
+	padding: 7px 7px 0px 10px;
 	margin: 0px 0px 2px 10px;
 }
 .currentSong{
@@ -165,7 +172,7 @@ a img{
 .xButton{
 	position: relative;
 	float:right;
-	top: -20px;
+	top: 0px;
 	width: 15px;
 	height: 15px;
 	background: url('/images/xButtons.png') 0 0 no-repeat;
@@ -267,6 +274,21 @@ a img{
 	background-position: 0px -34px;
 }
 
+/*== Play Whole Album ==*/
+.playAlbum{
+	visibility: hidden;
+	position: relative;
+	float: left;
+	top: -15px;
+	color: #580e0e;
+}
+#songs ul li ul li:hover .album{
+	visibility: hidden;
+}
+#songs ul li ul li:hover .playAlbum{
+	visibility: visible;
+}
+
 .songButton{
 	float: left;
 	position: relative;
@@ -274,6 +296,7 @@ a img{
 	width: 30px;
 	height: 34px;
 	right: -1px;
+	text-indent: -9000px;
 }
 .songButton:hover{
 	background-position: 0 -34px;

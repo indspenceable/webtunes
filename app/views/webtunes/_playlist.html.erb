@@ -2,9 +2,10 @@
 	<ul id="playlist_songs">
 		<div class="dragPadding"></div>
 		<li class="song currentSong">
-			<span class="songTitle">We Are The World</span><br>
-			<span class="artist">Kanye West</span>
 			<div class="xButton"></div>
+			<div class="user"><%= truncate("Dane Pieri", :length => 9) %></div>
+			<span class="songTitle"><%= truncate("We Are The World", :length => 25) %> </span><br>
+			<span class="artist"><%= truncate("Kanye West's Wonderful Musical Ensemble", :length => 23) %></span>
 			<script>
 				$('.xButton').click(function(){
 					$(this).parent().remove();
@@ -14,10 +15,10 @@
 		</li>
 		<li class="song nextSong">
 			<span class="songTitle">We Are The World</span><br>
-			<span class="artist">Kanye West</span>			
+			<span class="artist">Kanye West</span>
 		</li>
 		<li class="song nextSong">
-			<span class="songTitle">We Are The World</span><br>
+			<span class="songTitle"><%= truncate("We Are The World We Are The World We Are The World WWW", :length =>25) %></span><br>
 			<span class="artist">Kanye West</span>
 		</li>
 		<li class="song nextSong">

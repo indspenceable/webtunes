@@ -2,14 +2,30 @@
 	<ul>
 		<li>
 			<div class="songButton add"></div>
-			<div class="songButton playNow"></div>
+			<%= link_to 'Play Song', 'playSong', :class => 'songButton playNow'%>
 			<div class="details">
 				<ul>
-					<li>Title</li>
-					<li>Artist</li>
-					<li>Album</li>
+					<li><%= truncate("Super Really Long Song Title That has to be truncated and stuff", :length =>  32) %></li>
+					<li><%= truncate("Super Really Long Artist Name That has to be truncated and stuff", :length =>  32) %></li>
+					<li>
+						<div class="album"> 
+							<%= truncate("Super Really Long Album Name That has to be truncated and stuff", :length =>  32) %>
+						</div>
+						<div class="playAlbum">
+							<%= link_to "Play Whole Album", "playAlbum", :remote => true %>
+						</div>
+					</li>
 				</ul>
 			</div>
+			
+			<script>
+				$('.add').click(function(){
+					alert("Add Song to playlist!");
+				});
+				$('.playNow').click(function(){
+					alert("Play Song!");
+				});
+			</script>
 		</li>
 		
 		<li>

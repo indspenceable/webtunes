@@ -30,6 +30,10 @@ class WebtunesController < ApplicationController
     session[:name] = params[:id]
     render 'interface'
   end
+  
+  def playAlbum
+    
+  end
 
   private
   def itunes action
