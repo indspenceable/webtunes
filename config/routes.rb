@@ -5,8 +5,7 @@ Webtunes::Application.routes.draw do
   #match "/back" => "webtunes#back", :via => :post
   match "/:action", :controller => :webtunes
   
-  match "webtunes/login" => "webtunes#login"
-  
+  match "/login/:id" => "webtunes#login"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

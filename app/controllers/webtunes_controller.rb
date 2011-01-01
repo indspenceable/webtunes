@@ -27,9 +27,8 @@ class WebtunesController < ApplicationController
   end
   
   def login
-    puts "login controller"
     session[:name] = params[:id]
-    # render 'interface'
+    render 'interface'
   end
 
   private
