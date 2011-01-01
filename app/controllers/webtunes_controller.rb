@@ -2,6 +2,9 @@ class AppleScriptError < StandardError; end
 
 class WebtunesController < ApplicationController
   def interface
+    if session[:name].nil?
+      @needs_login = true
+    end
   end
   def test
   end
@@ -25,6 +28,11 @@ class WebtunesController < ApplicationController
   def set_volume
     itunes "set sound volume to #{params[:level]}"
     render :json => get_itunes_status
+  end
+  
+  def login
+    session[:name] = params[:id]
+    render 'interface'
   end
 
   private

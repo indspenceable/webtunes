@@ -1,11 +1,23 @@
 <div id="leftSection">
 	<div id="controls">
-		<div id="play_pause"></div>
+		<div id="play_pause" class="play"></div>
 		<div id="next"></div>
 		<div id="volume">
 			<div id="vSlider"></div>
 		</div>
 	</div>
+	
+	<%= render 'playlist' %>
+</div>
+
+<div id="rightSection">
+	<div id="top">
+		<div id="searchBox">
+			<input type="text" value="Find some music bro" id="searchField"></input>
+		</div>
+	</div>
+	
+	<%= render 'songlist' %>
 </div>
 
 <script>
@@ -19,8 +31,15 @@ $(function() {
 });
 
 $( "#vSlider" ).bind( "slidestop", function(event, ui) {
-	alert($( "#vSlider" ).slider( "values", 0 ).toString());
-	// Change volume on iTunes here
+	$.post('set_volume', {level:$( "#vSlider" ).slider( "values", 0 )});
 });
 
+$("#searchField").focus(function(){
+	if ($('#searchField').val() == "Find some music bro"){
+		$('#searchField').val("");	
+	} 
+});
+$("#searchField").click(function(){
+	this.select();
+});
 </script>

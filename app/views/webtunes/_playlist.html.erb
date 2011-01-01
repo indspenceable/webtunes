@@ -1,0 +1,40 @@
+<div id="playlist">
+	<ul id="playlist_songs">
+		<div class="dragPadding"></div>
+		<li class="song currentSong">
+			<span class="songTitle">We Are The World</span><br>
+			<span class="artist">Kanye West</span>
+			<div class="xButton"></div>
+			<script>
+				$('.xButton').click(function(){
+					$(this).parent().remove();
+					alert("Removed one - For some reason this gets called twice if you remove after re-ordering")
+				});
+			</script>
+		</li>
+		<li class="song nextSong">
+			<span class="songTitle">We Are The World</span><br>
+			<span class="artist">Kanye West</span>			
+		</li>
+		<li class="song nextSong">
+			<span class="songTitle">We Are The World</span><br>
+			<span class="artist">Kanye West</span>
+		</li>
+		<li class="song nextSong">
+			<span class="songTitle">We Are The World</span><br>
+			<span class="artist">Kanye West</span>
+		</li>
+		<div class="dragPadding"></div>
+	</ul>
+</div>
+
+<script>
+	$(function(){
+		$("#playlist_songs").sortable({
+			revert:true,
+			containment: "#playlist",
+			stop: function(event, ui) { alert("Reordered one")}
+		});
+
+	});
+</script>

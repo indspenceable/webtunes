@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $('#play_pause').click(function() {
-      $.post('play_pause')
+      $.post('play_pause');
+			$('#play_pause').toggleClass( 'pause')
       });
     $('#next').click(function() {
       $.post('next')
@@ -11,4 +12,4 @@ $(document).ready(function() {
     $('#vol').click(function() {
       $.post('set_volume',{level: 40})
       });
-    })
+})

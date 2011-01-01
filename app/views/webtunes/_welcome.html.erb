@@ -1,0 +1,26 @@
+<div id="welcomeMask">
+	<div id="welcome">
+		<div id="welcomeHead">
+			Welcome to webTunes
+		</div>
+		
+		<div id="welcomeTextEntry">
+			<input type="text" value="Who are you?" id="WTE"></input>
+		</div>
+		
+		<div class="letMeIn"></div>
+	</div>
+</div>
+
+<script>
+	$("#WTE").focus(function(){
+		if ($('#WTE').val() == "Who are you?"){
+			$('#WTE').val("");
+			$('.letMeIn').addClass('LMIafterFocus');
+			$('.letMeIn').click(function(){
+				$.post('login/' + $('#WTE').val());
+				$('#welcomeMask').remove();
+			});
+		} 
+	});
+</script>
