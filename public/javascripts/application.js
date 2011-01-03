@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#play_pause').click(function() {
       $.post('play_pause');
-			$('#play_pause').toggleClass( 'pause')
+			$('#play_pause').toggleClass("paused playing")
       });
     $('#next').click(function() {
       $.post('next')

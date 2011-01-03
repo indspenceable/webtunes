@@ -1,6 +1,6 @@
 <div id="leftSection">
 	<div id="controls">
-		<div id="play_pause" class="play"></div>
+		<div id="play_pause" class="<%= @state %>"></div>
 		<div id="next"></div>
 		<div id="volume">
 			<div id="vSlider"></div>
@@ -26,7 +26,7 @@ $(function() {
 	$( "#vSlider" ).slider({
 		min: 0,
 		max: 100,
-		values: [ 50 ]  // This needs to be set from an applescript call to check the iTunes volume
+		values: [<%= @volume %>]
 	});
 });
 

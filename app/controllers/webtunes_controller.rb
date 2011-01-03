@@ -2,8 +2,12 @@ class AppleScriptError < StandardError; end
 
 class WebtunesController < ApplicationController
   def interface
+    get_itunes_status
     if session[:name].nil?
       @needs_login = true
+    end
+    if @state == "stopped"
+      @state = "paused"
     end
   end
   def test
@@ -35,8 +39,23 @@ class WebtunesController < ApplicationController
     render 'interface'
   end
   
-  def playAlbum
+  def play_album
     
+  end
+  def play_song
+    
+  end
+  def add_song
+    # itunes "set track "
+    as_execute("set theplaylist to \"webTunes\"
+    property pid : #{params[:id]}
+
+    tell application \"iTunes\"
+    	set this_song to (every track whose persistent ID is pid)
+    	repeat with a_track in this_song
+    		duplicate a_track to playlist theplaylist
+    	end repeat
+    end tell")
   end
 
   private
@@ -92,9 +111,20 @@ class WebtunesController < ApplicationController
     rtn
   end
   def get_itunes_status
+    @volume = get_volume
+    @state = get_playing.chomp
+    return
     names = itunes "get name of every track of current playlist"
     artists = itunes "get artist of every track of current playlist"
     durations = itunes "get duration of every track of current playlist"
     [(split_by_strings names), (split_by_strings artists), (split_by_numbers durations)]
+  end
+  
+  def get_volume
+    itunes "get sound volume"
+  end
+  
+  def get_playing
+    itunes "get player state"
   end
 end

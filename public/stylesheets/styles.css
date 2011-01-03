@@ -98,11 +98,14 @@ a img{
 #play_pause:active{
 	background-position: 0px -94px;
 }
-.play{
+.playing{
+	background: url('/images/pause.png') 0 0 no-repeat;
+}
+.paused{
 	background: url('/images/play.png') 0 0 no-repeat;
 }
-.pause{
-	background: url('/images/pause.png') 0 0 no-repeat;
+.stopped{
+	background: url('/images/play.png') 0 0 no-repeat;
 }
 
 #next{
