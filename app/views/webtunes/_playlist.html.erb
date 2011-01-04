@@ -2,7 +2,7 @@
 	<ul id="playlist_songs">
 		<div class="dragPadding"></div>
 		<li class="song currentSong">
-			<div class="xButton"></div>
+			<%= link_to "Remove", "/remove/03DEFC986462B22B", :remote => true, :class => "xButton"%>
 			<div class="user"><%= truncate("Dane Pieri", :length => 9) %></div>
 			<span class="songTitle"><%= truncate("We Are The World", :length => 25) %> </span><br>
 			<span class="artist"><%= truncate("Kanye West's Wonderful Musical Ensemble", :length => 23) %></span>
@@ -34,7 +34,8 @@
 		$("#playlist_songs").sortable({
 			revert:true,
 			containment: "#playlist",
-			stop: function(event, ui) { alert("Reordered one")}
+			stop: function(event, ui) { 				$.post("reorder/\"A109BCFF3DD160E5\",\"9FA839E66C14CA8E\",\"5472CE84E5B647F9\",\"9FA839E66C14CA91\",\"5472CE84E5B64733\",\"5472CE84E5B6474D\",\"9FA839E66C14CA8B\",\"9FA839E66C14CA48\",\"9FA839E66C14CA47\",\"9FA839E66C14CA93\",\"9FA839E66C14CA8D\",\"5472CE84E5B64784\",\"5472CE84E5B64819\",\"5472CE84E5B646E2\",\"9FA839E66C14CA8C\",\"5472CE84E5B647B1\",\"5472CE84E5B646AE\",\"9FA839E66C14CA46\",\"9FA839E66C14CA8F\",\"9FA839E66C14CA4B\",\"9FA839E66C14CA92\",\"9FA839E66C14CA4A\"")
+			}
 		});
 
 	});

@@ -178,6 +178,7 @@ a img{
 	top: 0px;
 	width: 15px;
 	height: 15px;
+	text-indent: -9000px;
 	background: url('/images/xButtons.png') 0 0 no-repeat;
 	visibility: hidden;
 	cursor: pointer;

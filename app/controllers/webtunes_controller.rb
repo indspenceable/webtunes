@@ -43,18 +43,66 @@ class WebtunesController < ApplicationController
     
   end
   def play_song
-    
+    as_execute("set theplaylist to \"webTunes\"
+    set temp to \"webTunesTemp\"
+    property pid : \"#{params[:id]}\"
+
+    tell application \"iTunes\"
+    	set this_song to (every track whose persistent ID is pid)
+    	repeat with a_track in this_song
+    		duplicate a_track to playlist theplaylist
+    		duplicate (every track in playlist theplaylist) to playlist temp
+    		delete (every track in playlist temp whose persistent ID is pid)
+    		delete (every track in playlist theplaylist whose persistent ID is not pid)
+    		play first track in playlist theplaylist
+    		duplicate (every track in playlist temp) to playlist theplaylist
+    		delete every track in playlist temp
+    	end repeat
+    end tell")
   end
   def add_song
-    # itunes "set track "
+    #I think this adds to the bottom of the playlist
     as_execute("set theplaylist to \"webTunes\"
-    property pid : #{params[:id]}
+    property pid : \"#{params[:id]}\"
 
     tell application \"iTunes\"
     	set this_song to (every track whose persistent ID is pid)
     	repeat with a_track in this_song
     		duplicate a_track to playlist theplaylist
     	end repeat
+    end tell")
+  end
+  def remove
+    #removes the first song in the playlist that matches. Even if the user tried to remove a later duplicate
+    as_execute("set theplaylist to \"webTunes\"
+    property pid : \"#{params[:id]}\"
+
+    tell application \"iTunes\"
+    	set this_song to (every track in playlist theplaylist whose persistent ID is pid)
+    	repeat with a_track in this_song
+    		return delete a_track
+    	end repeat
+    end tell")
+  end
+  def reorder
+    as_execute("set theplaylist to \"webTunes\"
+    set temp to \"webTunesTemp\"
+    property ids : {#{params[:list]}}
+    tell application \"iTunes\"
+    	repeat with i from 1 to (length of ids)
+    		set new_list to (every track whose persistent ID is (item i in ids as text))
+    		repeat with a_track in new_list
+    			duplicate a_track to playlist temp
+    		end repeat
+    	end repeat
+
+    	delete (every track in playlist theplaylist whose persistent ID is not (item 1 in ids as text))
+    	if number of tracks in playlist theplaylist is greater than 0 then
+    		delete (every track in playlist temp whose persistent ID is (item 1 in ids as text))
+    	end if
+    	duplicate every track in playlist temp to playlist theplaylist
+    	play first track in playlist theplaylist
+    	delete every track in playlist temp
     end tell")
   end
 
