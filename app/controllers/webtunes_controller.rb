@@ -61,7 +61,9 @@ class WebtunesController < ApplicationController
     end tell")
   end
   def add_song
-    #I think this adds to the bottom of the playlist
+    # I think this adds to the bottom of the playlist
+    
+    # Creates a new playlist becaue you can not reorder through applescript
     as_execute("set theplaylist to \"webTunes\"
     property pid : \"#{params[:id]}\"
 
@@ -85,6 +87,16 @@ class WebtunesController < ApplicationController
     end tell")
   end
   def reorder
+    # There is not way to straight reorder a playlist through applescript
+    # so instead I send a list of what the new playlist should be and 
+    # create it fresh through a temp playlist
+    
+    # If song #1 in the new playlist is also in the old playlist it leaves
+    # it there so that playback is not interrupted. Either way as soon as 
+    # the new playlist is created it plays whatever song is #1
+    
+    # This should be updated so that it keeps it paused if the player was 
+    # already paused
     as_execute("set theplaylist to \"webTunes\"
     set temp to \"webTunesTemp\"
     property ids : {#{params[:list]}}
