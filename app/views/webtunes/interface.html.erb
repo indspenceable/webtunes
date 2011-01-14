@@ -1,13 +1,5 @@
 <div id="leftSection">
-	<div id="controls">
-		<div id="play_pause" class="<%= @state %>"></div>
-		<div id="next"></div>
-		<div id="volume">
-			<div id="vSlider"></div>
-		</div>
-	</div>
-	
-	<%= render 'playlist' %>
+	<%= render 'left_section' %>
 </div>
 
 <div id="rightSection">
@@ -17,23 +9,15 @@
 		</div>
 	</div>
 	
-	<%= render 'songlist' %>
+	<div id="songs_container">
+		<div id="songs_list">
+			<%= render 'songlist' %>
+		</div>
+		<div id="searching"><div id="searching_animation"></div></div>
+	</div>
 </div>
 
 <script>
-
-$(function() {
-	$( "#vSlider" ).slider({
-		min: 0,
-		max: 100,
-		values: [<%= @volume %>]
-	});
-});
-
-$( "#vSlider" ).bind( "slidestop", function(event, ui) {
-	$.post('set_volume', {level:$( "#vSlider" ).slider( "values", 0 )});
-});
-
 $("#searchField").focus(function(){
 	if ($('#searchField').val() == "Find some music bro"){
 		$('#searchField').val("");	
@@ -42,4 +26,22 @@ $("#searchField").focus(function(){
 $("#searchField").click(function(){
 	this.select();
 });
+
+$("#searchField").keyup(function(){
+	if($(this).val().length >= 3){
+		$("#searching").show();
+		$.post('search', {query:$(this).val()}, function(){
+			$("#searching").hide();
+			
+		});
+	}
+});
+
+$(document).ready( function(){
+	setInterval(function(){
+		if(!lock) { 
+			$.post('/phoneHome');
+		}
+	}, 7000);
+})
 </script>

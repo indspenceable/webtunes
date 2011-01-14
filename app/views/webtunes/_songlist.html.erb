@@ -1,119 +1,26 @@
-<div id="songs">
-	<ul>
-		<li>
-			<%= link_to 'Add Song', 'add_song/A109BCFF3DD160E5', :class => 'songButton add', :remote => true%>
-			<%= link_to 'Play Song', 'play_song/A109BCFF3DD160E5', :class => 'songButton playNow', :remote => true%>
-			<div class="details">
-				<ul>
-					<li><%= truncate("Super Really Long Song Title That has to be truncated and stuff", :length =>  32) %></li>
-					<li><%= truncate("Super Really Long Artist Name That has to be truncated and stuff", :length =>  32) %></li>
-					<li>
-						<div class="album"> 
-							<%= truncate("Super Really Long Album Name That has to be truncated and stuff", :length =>  32) %>
-						</div>
-						<div class="playAlbum">
-							<%= link_to "Play Whole Album", "play_album", :remote => true %>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</li>
+<ul>
+	<% if @tracks %>
+		<% @tracks.each do |t| %>
+			<li>
+				<%= link_to 'Add Song', "add_song/#{t[2]}", :class => 'songButton add', :remote => true%>
+				<%= link_to 'Play Song', "play_song/#{t[2]}", :class => 'songButton playNow', :remote => true%>
+				<div class="details">
+					<ul>
+						<li><%= truncate("#{t[0]}", :length =>  32) %></li>
+						<li><%= truncate("#{t[1]}", :length =>  32) %></li>
+						<li>
+							<div class="album"> 
+								<%= truncate("#{t[3]}", :length =>  32) %>
+							</div>
+							<div class="playAlbum">
+								<%= link_to "Play Whole Album", "play_album", :remote => true %>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</li>
+	
+		<% end %>
+	<% end %>
+</ul>
 		
-		<li>
-			<div class="songButton add"></div>
-			<div class="songButton playNow"></div>
-			<div class="details">
-				<ul>
-					<li>Title</li>
-					<li>Artist</li>
-					<li>Album</li>
-				</ul>
-			</div>
-		</li>
-		
-		<li>
-			<div class="songButton add"></div>
-			<div class="songButton playNow"></div>
-			<div class="details">
-				<ul>
-					<li>Title</li>
-					<li>Artist</li>
-					<li>Album</li>
-				</ul>
-			</div>
-		</li>
-		<li>
-			<div class="songButton add"></div>
-			<div class="songButton playNow"></div>
-			<div class="details">
-				<ul>
-					<li>Title</li>
-					<li>Artist</li>
-					<li>Album</li>
-				</ul>
-			</div>
-		</li>
-		
-		<li>
-			<div class="songButton add"></div>
-			<div class="songButton playNow"></div>
-			<div class="details">
-				<ul>
-					<li>Title</li>
-					<li>Artist</li>
-					<li>Album</li>
-				</ul>
-			</div>
-		</li>
-		
-		<li>
-			<div class="songButton add"></div>
-			<div class="songButton playNow"></div>
-			<div class="details">
-				<ul>
-					<li>Title</li>
-					<li>Artist</li>
-					<li>Album</li>
-				</ul>
-			</div>
-		</li>
-		
-		<li>
-			<div class="songButton add"></div>
-			<div class="songButton playNow"></div>
-			<div class="details">
-				<ul>
-					<li>Title</li>
-					<li>Artist</li>
-					<li>Album</li>
-				</ul>
-			</div>
-		</li>
-		
-		<li>
-			<div class="songButton add"></div>
-			<div class="songButton playNow"></div>
-			<div class="details">
-				<ul>
-					<li>Title</li>
-					<li>Artist</li>
-					<li>Album</li>
-				</ul>
-			</div>
-		</li>
-		
-		<li>
-			<div class="songButton add"></div>
-			<div class="songButton playNow"></div>
-			<div class="details">
-				<ul>
-					<li>Title</li>
-					<li>Artist</li>
-					<li>Album</li>
-				</ul>
-			</div>
-		</li>
-		
-
-	</ul>
-</div>

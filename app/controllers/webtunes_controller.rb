@@ -17,26 +17,71 @@ class WebtunesController < ApplicationController
   #toggle playing status
   def play_pause
     itunes 'playpause'
-    render :json => get_itunes_status
+    get_itunes_status
   end
   #skip the current_song
   def next
     itunes 'next track'
-    render :json => get_itunes_status
+    get_itunes_status
   end
   # back to the previous track
   def back
     itunes 'back track'
-    render :json => get_itunes_status
+    get_itunes_status
   end
   def set_volume
     itunes "set sound volume to #{params[:level]}"
-    render :json => get_itunes_status
+    get_itunes_status
   end
   
   def login
+    get_itunes_status
     session[:name] = params[:id]
     render 'interface'
+  end
+  
+  def search
+    results = as_execute("set returnResults to {}
+
+    set names to {}
+    set ids to {}
+    set myArtists to {}
+    set myAlbums to {}
+
+    tell application \"iTunes\"
+    	set myResults to (search library playlist 1 for \"#{params[:query]}\")
+    	repeat with a_track in myResults
+    		set myArtist to artist of a_track
+    		set myId to persistent ID of a_track
+    		set myName to name of a_track
+    		set myAlbum to album of a_track
+    		copy myName to end of returnResults
+    		copy myArtist to end of returnResults
+    		copy myId to end of returnResults
+    		copy myAlbum to end of returnResults
+    	end repeat
+    end tell
+
+    --set returnResults to {names, myArtists, ids, myAlbums}
+    return returnResults")
+
+    results =  Shellwords.shellwords(results)
+    
+    results.each do |n|
+      n.gsub!(/[,{}]/, "")
+    end
+    
+    slicePoint = results.size/4
+    
+    @tracks = []
+    0.upto(slicePoint) do |i|
+      sub = []
+      sub << results[4*i]
+      sub << results[(4*i) + 1]
+      sub << results[(4*i) + 2]
+      sub << results[(4*i) + 3]
+      @tracks << sub
+    end
   end
   
   def play_album
@@ -59,6 +104,8 @@ class WebtunesController < ApplicationController
     		delete every track in playlist temp
     	end repeat
     end tell")
+    
+    get_itunes_status
   end
   def add_song
     # I think this adds to the bottom of the playlist
@@ -73,6 +120,8 @@ class WebtunesController < ApplicationController
     		duplicate a_track to playlist theplaylist
     	end repeat
     end tell")
+    
+    get_itunes_status
   end
   def remove
     #removes the first song in the playlist that matches. Even if the user tried to remove a later duplicate
@@ -85,8 +134,13 @@ class WebtunesController < ApplicationController
     		return delete a_track
     	end repeat
     end tell")
+    
+    get_itunes_status
   end
+  
   def reorder
+    list =  params[:list].sub!(/[\[]/, "{").sub!(/[\]]/, "}")
+
     # There is not way to straight reorder a playlist through applescript
     # so instead I send a list of what the new playlist should be and 
     # create it fresh through a temp playlist
@@ -99,7 +153,7 @@ class WebtunesController < ApplicationController
     # already paused
     as_execute("set theplaylist to \"webTunes\"
     set temp to \"webTunesTemp\"
-    property ids : {#{params[:list]}}
+    property ids : #{list}
     tell application \"iTunes\"
     	repeat with i from 1 to (length of ids)
     		set new_list to (every track whose persistent ID is (item i in ids as text))
@@ -116,6 +170,12 @@ class WebtunesController < ApplicationController
     	play first track in playlist theplaylist
     	delete every track in playlist temp
     end tell")
+    
+    get_itunes_status
+  end
+  
+  def phoneHome
+    get_itunes_status
   end
 
   private
@@ -141,43 +201,32 @@ class WebtunesController < ApplicationController
       result
     end
   end
-
-  #TODO - this doesn't HALT on poorly formed input.
-  #this takes a list returned by 
-  def split_by_strings s
-    c = 2 # SHOULD BE A {"
-    rtn = []
-    while c < s.size - 2
-      start = c
-      while s[c] != "\"" && s[c-1] != "\\"
-        c += 1
-      end
-      rtn << "#{s[start, c-start]}"
-      c += 4
-    end
-    rtn
-  end
-  def split_by_numbers s
-    c = 1 # SHOULD BE A {
-    rtn = []
-    while c < s.size - 1
-      start = c
-      while s[c] && c < s.size-1 != ","
-        c += 1
-      end
-      rtn << "#{s[start, c-start]}"
-      c += 2
-    end
-    rtn
-  end
+  
   def get_itunes_status
+    itunes("set myIndex to index of current track
+    	set oldTracks to every track in playlist \"webTunes\" whose index is less than myIndex
+
+    	repeat with myTrack in oldTracks
+    		delete myTrack
+    	end repeat")
     @volume = get_volume
     @state = get_playing.chomp
-    return
-    names = itunes "get name of every track of current playlist"
-    artists = itunes "get artist of every track of current playlist"
-    durations = itunes "get duration of every track of current playlist"
-    [(split_by_strings names), (split_by_strings artists), (split_by_numbers durations)]
+    names = Shellwords.shellwords(itunes("get name of every track of playlist \"webTunes\""))
+    artists = Shellwords.shellwords(itunes("get artist of every track of playlist \"webTunes\""))
+    persistentIDs = Shellwords.shellwords(itunes("get persistent ID of every track of playlist \"webTunes\""))
+
+    names.each_with_index do |n, i|
+      n.gsub!(/[,{}]/, "")
+      artists[i].gsub!(/[,{}]/, "")
+      persistentIDs[i].gsub!(/[,{}]/, "")
+    end
+    # puts "names #{names.size} artists #{artists.size} ids #{persistentIDs.size}"
+    
+    @playlist_tracks = []
+    0.upto(names.size - 1) do |index|
+      sub = [names[index], artists[index], persistentIDs[index]]
+      @playlist_tracks << sub
+    end
   end
   
   def get_volume

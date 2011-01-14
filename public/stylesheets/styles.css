@@ -136,6 +136,9 @@ a img{
 	margin: 0px 0px 20px 0px;
 /*	padding: 100px 0 10px 0;*/
 }
+#playlist_songs{
+	padding: 20px 0 20px 0;
+}
 .songTitle{
 	font-weight:bold;
 }
@@ -234,29 +237,55 @@ a img{
 
 /*==== Songs ====*/
 
-#songs{
+#songs_container{
+	position: relative;
 	float: right;
 	width: 770px;
-	margin: 20px 10px 20px 0px;
+	min-height: 300px;
+	padding: 20px 10px 20px 0px;
+}
+#songs_list{
+	height: 100%;
+/*	position: absolute;*/
+/*	top: 0px;*/
+/*	right: 0px;*/
+	
+}
+#searching{
+	display: none;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100%;
+	background: #FFFFFF;
+	z-index: 1000;
+	opacity: 0.5;
+}
+#searching_animation{
+	height: 16px;
+	width: 16px;
+	background: url('/images/loader.gif');
+	margin: 40px auto 0 auto;
 }
 
-#songs ul li{
+#songs_list ul li{
 	list-style-type: none;
 	width: 767px;
 	height: 34px;
 	cursor: pointer;
 }
-#songs ul li .details{
+#songs_list ul li .details{
 	float: left;
 	width: 707px;
 	height: 34px;
 	background: url('/images/row_even.png') 0 0 no-repeat;
 }
 
-#songs ul li  ul{
+#songs_list ul li  ul{
 	padding: 5px 0px 0px 5px;
 }
-#songs ul li ul li{
+#songs_list ul li ul li{
 	float: left;
 	list-style-type: none;
 	width: 220px;
@@ -267,14 +296,14 @@ a img{
 	font-size: 13px;
 }
 
-#songs ul li:nth-of-type(odd) .details{
+#songs_list ul li:nth-of-type(odd) .details{
   background: url('/images/row_odd.png') 0 0 no-repeat;
 }
 
-#songs ul li:hover .songButton{
+#songs_list ul li:hover .songButton{
 	visibility: visible;
 }
-#songs ul li:hover .details{
+#songs_list ul li:hover .details{
 	background-position: 0px -34px;
 }
 
