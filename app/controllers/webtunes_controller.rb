@@ -18,7 +18,11 @@ class WebtunesController < ApplicationController
   ## Controls for manipulating itunes
   #toggle playing status
   def play_pause
-    itunes 'playpause'
+    if get_playing.chomp == 'stopped'
+      itunes "play first track in playlist \"webTunes\""
+    else
+      itunes 'playpause'
+    end
     Rails.cache.clear
     get_itunes_status
   end
