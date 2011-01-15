@@ -1,7 +1,9 @@
 class AppleScriptError < StandardError; end
 
 class WebtunesController < ApplicationController
+  
   def interface
+    Rails.cache.clear
     get_itunes_status
     if session[:name].nil?
       @needs_login = true
@@ -17,20 +19,24 @@ class WebtunesController < ApplicationController
   #toggle playing status
   def play_pause
     itunes 'playpause'
+    Rails.cache.clear
     get_itunes_status
   end
   #skip the current_song
   def next
     itunes 'next track'
+    Rails.cache.clear
     get_itunes_status
   end
   # back to the previous track
   def back
     itunes 'back track'
+    Rails.cache.clear
     get_itunes_status
   end
   def set_volume
     itunes "set sound volume to #{params[:level]}"
+    Rails.cache.clear
     get_itunes_status
   end
   
@@ -88,6 +94,7 @@ class WebtunesController < ApplicationController
     
   end
   def play_song
+    Rails.cache.clear
     as_execute("set theplaylist to \"webTunes\"
     set temp to \"webTunesTemp\"
     property pid : \"#{params[:id]}\"
@@ -108,6 +115,7 @@ class WebtunesController < ApplicationController
     get_itunes_status
   end
   def add_song
+    Rails.cache.clear
     # I think this adds to the bottom of the playlist
     
     # Creates a new playlist becaue you can not reorder through applescript
@@ -124,6 +132,7 @@ class WebtunesController < ApplicationController
     get_itunes_status
   end
   def remove
+    Rails.cache.clear
     #removes the first song in the playlist that matches. Even if the user tried to remove a later duplicate
     as_execute("set theplaylist to \"webTunes\"
     property pid : \"#{params[:id]}\"
@@ -139,6 +148,7 @@ class WebtunesController < ApplicationController
   end
   
   def reorder
+    Rails.cache.clear
     list =  params[:list].sub!(/[\[]/, "{").sub!(/[\]]/, "}")
 
     # There is not way to straight reorder a playlist through applescript
@@ -178,13 +188,14 @@ class WebtunesController < ApplicationController
     get_itunes_status
   end
 
+
+
   private
   def itunes action
     #vim coloring gets messed up if I use %s{. Sorry.
     as_execute("tell application \"iTunes\" 
                   #{action} 
                 end tell")
-
   end
 
   def as_execute(script)
@@ -203,29 +214,31 @@ class WebtunesController < ApplicationController
   end
   
   def get_itunes_status
-    itunes("set myIndex to index of current track
-    	set oldTracks to every track in playlist \"webTunes\" whose index is less than myIndex
+    Rails.cache.fetch('status') do
+      itunes("set myIndex to index of current track
+      	set oldTracks to every track in playlist \"webTunes\" whose index is less than myIndex
 
-    	repeat with myTrack in oldTracks
-    		delete myTrack
-    	end repeat")
-    @volume = get_volume
-    @state = get_playing.chomp
-    names = Shellwords.shellwords(itunes("get name of every track of playlist \"webTunes\""))
-    artists = Shellwords.shellwords(itunes("get artist of every track of playlist \"webTunes\""))
-    persistentIDs = Shellwords.shellwords(itunes("get persistent ID of every track of playlist \"webTunes\""))
+      	repeat with myTrack in oldTracks
+      		delete myTrack
+      	end repeat")
+      @volume = get_volume
+      @state = get_playing.chomp
+      names = Shellwords.shellwords(itunes("get name of every track of playlist \"webTunes\""))
+      artists = Shellwords.shellwords(itunes("get artist of every track of playlist \"webTunes\""))
+      persistentIDs = Shellwords.shellwords(itunes("get persistent ID of every track of playlist \"webTunes\""))
 
-    names.each_with_index do |n, i|
-      n.gsub!(/[,{}]/, "")
-      artists[i].gsub!(/[,{}]/, "")
-      persistentIDs[i].gsub!(/[,{}]/, "")
-    end
-    # puts "names #{names.size} artists #{artists.size} ids #{persistentIDs.size}"
-    
-    @playlist_tracks = []
-    0.upto(names.size - 1) do |index|
-      sub = [names[index], artists[index], persistentIDs[index]]
-      @playlist_tracks << sub
+      names.each_with_index do |n, i|
+        n.gsub!(/[,{}]/, "")
+        artists[i].gsub!(/[,{}]/, "")
+        persistentIDs[i].gsub!(/[,{}]/, "")
+      end
+      # puts "names #{names.size} artists #{artists.size} ids #{persistentIDs.size}"
+  
+      @playlist_tracks = []
+      0.upto(names.size - 1) do |index|
+        sub = [names[index], artists[index], persistentIDs[index]]
+        @playlist_tracks << sub
+      end
     end
   end
   

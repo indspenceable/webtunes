@@ -1,39 +1,41 @@
-<div id="controls">
-	<div id="play_pause" class="<%= @state %>"></div>
-	<div id="next"></div>
-	<div id="volume">
-		<div id="vSlider"></div>
+<% cache 'leftSection' do%>
+	<div id="controls">
+		<div id="play_pause" class="<%= @state %>"></div>
+		<div id="next"></div>
+		<div id="volume">
+			<div id="vSlider"></div>
+		</div>
 	</div>
-</div>
 
-<div id="playlist">
-	<%= render 'playlist' %>
-</div>
+	<div id="playlist">
+		<%= render 'playlist' %>
+	</div>
 
-<script>
-	$(function() {
-		$( "#vSlider" ).slider({
-			min: 0,
-			max: 100,
-			values: [<%= @volume %>]
+	<script>
+		$(function() {
+			$( "#vSlider" ).slider({
+				min: 0,
+				max: 100,
+				values: [<%= @volume %>]
+			});
 		});
-	});
 
-	$( "#vSlider" ).bind( "slidestop", function(event, ui) {
-		$.post('set_volume', {level:$( "#vSlider" ).slider( "values", 0 )});
-	});
+		$( "#vSlider" ).bind( "slidestop", function(event, ui) {
+			$.post('set_volume', {level:$( "#vSlider" ).slider( "values", 0 )});
+		});
 	
-    $('#play_pause').click(function() {
-		lock = true;
-		$('#play_pause').toggleClass("paused playing");
-      	$.post('play_pause', function(){
-			lock = false;
-		});
-    });
-    $('#next').click(function() {
-		lock = true
-    	$.post('next', function(){
-			lock = false;
-		});
-    });
-</script>
+	    $('#play_pause').click(function() {
+			lock = true;
+			$('#play_pause').toggleClass("paused playing");
+	      	$.post('play_pause', function(){
+				lock = false;
+			});
+	    });
+	    $('#next').click(function() {
+			lock = true
+	    	$.post('next', function(){
+				lock = false;
+			});
+	    });
+	</script>
+<% end %>
