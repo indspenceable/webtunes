@@ -189,6 +189,7 @@ class WebtunesController < ApplicationController
   end
   
   def phoneHome
+    # Rails.cache.clear and puts "clearing" if Time.now > @expire_time
     get_itunes_status
   end
 
@@ -218,7 +219,16 @@ class WebtunesController < ApplicationController
   end
   
   def get_itunes_status
-    Rails.cache.fetch('status') do
+    # @time_left = itunes("if player state is playing then
+    #    return (duration of current track) - player position
+    #  else
+    #    return 200
+    #  end if").chomp!.to_f
+    #  
+    # @time_left = [@time_left, 30].min
+    #, :expires_in => @time_left.seconds
+     
+    playlist = Rails.cache.fetch('status') do
       itunes("set myIndex to index of current track
       	set oldTracks to every track in playlist \"webTunes\" whose index is less than myIndex
 
@@ -230,20 +240,28 @@ class WebtunesController < ApplicationController
       names = Shellwords.shellwords(itunes("get name of every track of playlist \"webTunes\""))
       artists = Shellwords.shellwords(itunes("get artist of every track of playlist \"webTunes\""))
       persistentIDs = Shellwords.shellwords(itunes("get persistent ID of every track of playlist \"webTunes\""))
-
+      
       names.each_with_index do |n, i|
         n.gsub!(/[,{}]/, "")
         artists[i].gsub!(/[,{}]/, "")
         persistentIDs[i].gsub!(/[,{}]/, "")
       end
-      # puts "names #{names.size} artists #{artists.size} ids #{persistentIDs.size}"
   
       @playlist_tracks = []
       0.upto(names.size - 1) do |index|
         sub = [names[index], artists[index], persistentIDs[index]]
         @playlist_tracks << sub
       end
+      @playlist_tracks
     end
+
+    # puts "playlist #{playlist}"
+    if itunes("get persistent ID of current track").chomp!.gsub!(/[\""]/, "") != playlist[0][2]
+      puts "it's past"
+      Rails.cache.clear
+      get_itunes_status
+    end
+    
   end
   
   def get_volume
