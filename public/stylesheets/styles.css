@@ -49,7 +49,7 @@ a img{
 #container{
 /*	position: relative;*/
 	width: 1040px;
-	margin: -65px auto 0px auto;
+	margin: -65px auto 20px auto;
 }
 #cTop{
 	width: 1040px;
@@ -74,11 +74,13 @@ a img{
 
 #leftSection{
 /*	position: relative;*/
+/*	top: -5px;*/
 	float: left;
-	width:250px;
+	width:256px;
+	min-height: 900px;
 	height: 100%;
-	border-right: 1px solid #202020;
-	overflow:auto;
+	background: url('/images/leftSide.png') 0 0 repeat-y;
+/*	overflow:auto;*/
 }
 
 /*==== Controls ====*/

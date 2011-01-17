@@ -153,8 +153,18 @@ class WebtunesController < ApplicationController
   
   def reorder
     Rails.cache.clear
+    clear_old_tracks
     list =  params[:list].sub!(/[\[]/, "{").sub!(/[\]]/, "}")
 
+    # Do this so that if someone reorders right after a song has finished we just ignore what they did
+    currentPlaylist =  itunes("get persistent ID of every track of playlist \"webTunes\"").gsub(/ /,'').size
+    if currentPlaylist > list.size + 5 || currentPlaylist < list.size - 5
+      get_itunes_status
+      render '/webtunes/_left_section'
+      return
+    end
+    
+    
     # There is not way to straight reorder a playlist through applescript
     # so instead I send a list of what the new playlist should be and 
     # create it fresh through a temp playlist
@@ -172,7 +182,7 @@ class WebtunesController < ApplicationController
     	repeat with i from 1 to (length of ids)
     		set new_list to (every track whose persistent ID is (item i in ids as text))
     		repeat with a_track in new_list
-    			duplicate a_track to playlist temp
+      	  duplicate a_track to playlist temp
     		end repeat
     	end repeat
 
@@ -186,6 +196,7 @@ class WebtunesController < ApplicationController
     end tell")
     
     get_itunes_status
+    render '/webtunes/_left_section'
   end
   
   def phoneHome
@@ -218,23 +229,9 @@ class WebtunesController < ApplicationController
     end
   end
   
-  def get_itunes_status
-    # @time_left = itunes("if player state is playing then
-    #    return (duration of current track) - player position
-    #  else
-    #    return 200
-    #  end if").chomp!.to_f
-    #  
-    # @time_left = [@time_left, 30].min
-    #, :expires_in => @time_left.seconds
-     
+  def get_itunes_status     
     playlist = Rails.cache.fetch('status') do
-      itunes("set myIndex to index of current track
-      	set oldTracks to every track in playlist \"webTunes\" whose index is less than myIndex
-
-      	repeat with myTrack in oldTracks
-      		delete myTrack
-      	end repeat")
+      clear_old_tracks
       @volume = get_volume
       @state = get_playing.chomp
       names = Shellwords.shellwords(itunes("get name of every track of playlist \"webTunes\""))
@@ -256,12 +253,21 @@ class WebtunesController < ApplicationController
     end
 
     # puts "playlist #{playlist}"
-    if itunes("get persistent ID of current track").chomp!.gsub!(/[\""]/, "") != playlist[0][2]
-      puts "it's past"
+    pID = itunes("get persistent ID of current track")
+    if pID != "" && playlist.size > 0 && pID.chomp!.gsub!(/[\""]/, "") != playlist[0][2]
       Rails.cache.clear
       get_itunes_status
     end
     
+  end
+  
+  def clear_old_tracks
+    itunes("set myIndex to index of current track
+    	set oldTracks to every track in playlist \"webTunes\" whose index is less than myIndex
+
+    	repeat with myTrack in oldTracks
+    		delete myTrack
+    	end repeat")
   end
   
   def get_volume

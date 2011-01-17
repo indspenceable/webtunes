@@ -10,6 +10,7 @@
 				<script>
 					$('.xButton').click(function(){
 						$(this).parent().remove();
+						lock = true;
 					});
 				</script>
 			</li>
@@ -21,6 +22,7 @@
 				<script>
 					$('.xButton').click(function(){
 						$(this).parent().remove();
+						lock = true;
 					});
 				</script>
 			</li>
@@ -36,6 +38,7 @@
 			revert:true,
 			containment: "#playlist",
 			stop: function(event, ui) { 
+				lock = true;
 				var list = escape(JSON.stringify($("#playlist_songs").sortable('toArray')));
 				$.post(("reorder/" + list), function(){
 					lock = false
