@@ -7,6 +7,14 @@
 				<%= link_to "Remove", "/remove/#{t[2]}", :remote => true, :class => "xButton"%>
 				<span class="songTitle"><%= truncate("#{t[0]}", :length => 25) %> </span><br>
 				<span class="artist"><%= truncate("#{t[1]}", :length => 23) %></span>
+				<% if false %>
+					<div id="playHead" style="left:<%=213-(@end_time - Time.now)%>px"></div>
+					asdf
+					<script>
+
+					</script>
+				<% end %>
+				
 				<script>
 					$('.xButton').click(function(){
 						$(this).parent().remove();

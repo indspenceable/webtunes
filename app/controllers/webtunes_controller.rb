@@ -98,7 +98,6 @@ class WebtunesController < ApplicationController
     
   end
   def play_song
-    Rails.cache.clear
     as_execute("set theplaylist to \"webTunes\"
     set temp to \"webTunesTemp\"
     property pid : \"#{params[:id]}\"
@@ -115,11 +114,10 @@ class WebtunesController < ApplicationController
     		delete every track in playlist temp
     	end repeat
     end tell")
-    
+    Rails.cache.clear
     get_itunes_status
   end
   def add_song
-    Rails.cache.clear
     # I think this adds to the bottom of the playlist
     
     # Creates a new playlist becaue you can not reorder through applescript
@@ -132,7 +130,7 @@ class WebtunesController < ApplicationController
     		duplicate a_track to playlist theplaylist
     	end repeat
     end tell")
-    
+    Rails.cache.clear
     get_itunes_status
   end
   def remove
@@ -243,6 +241,19 @@ class WebtunesController < ApplicationController
         artists[i].gsub!(/[,{}]/, "")
         persistentIDs[i].gsub!(/[,{}]/, "")
       end
+      
+      # time_left = itunes("if player state is playing then
+      #        return (duration of current track) - player position
+      #      else
+      #        return false
+      #      end if")
+      # 
+      # if time_left     
+      #   puts "the end time is #{time_left} and"
+      #   @end_time = Time.now + time_left.chomp.to_f
+      #   puts "end time is #{@end_time}"
+      #   puts "and teh current time is #{Time.now}"
+      # end  
   
       @playlist_tracks = []
       0.upto(names.size - 1) do |index|
@@ -252,7 +263,7 @@ class WebtunesController < ApplicationController
       @playlist_tracks
     end
 
-    # puts "playlist #{playlist}"
+    #If song has ended and playlist needs to be updated
     pID = itunes("get persistent ID of current track")
     if pID != "" && playlist.size > 0 && pID.chomp!.gsub!(/[\""]/, "") != playlist[0][2]
       Rails.cache.clear
